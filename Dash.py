@@ -1,1 +1,1 @@
-print('vamo que vamo')
+print('VASCO')
