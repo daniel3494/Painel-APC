@@ -3,9 +3,9 @@
 
 from dash import Dash, html, dcc
 import plotly.express as px
-import pandas as pd
+import pandas as pd 
+app = Dash(__name__) 
 
-app = Dash(__name__)
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
@@ -17,7 +17,12 @@ df = pd.DataFrame({
 
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
-app.layout = html.Div(children=[
+app.layout =html.Div(children=[
+
+    html.Div(children=[
+        html.H1(children='Hahai')
+    ]),
+
     html.H1(children='Teste Dash'),
 
     html.Div(children='''
