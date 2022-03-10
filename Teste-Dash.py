@@ -10,14 +10,9 @@ app = Dash(__name__)
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pd.DataFrame({
-    "Frutas": ["Maçãs", "Laranjas", "Bananas", "Soja", "Maçãs", "Laranjas", "Bananas","Soja"],
-    "Quantidade": [100, 150, 650, 1000, 250, 100, 130, 2000],
-    "Estados": ["Bahia", "Bahia", "Bahia", "Bahia",
-     "Rio Grande do Sul", "Rio Grande do Sul", "Rio Grande do Sul", "Rio Grande do Sul"]
-})
+df = pd.read_excel("Vendas_1.xlsx")
 
-fig = px.bar(df, x="Frutas", y="Quantidade", color="Estados", barmode="group")
+fig = px.bar(df, x="Produto", y="Quantidade", color="ID Loja", barmode="group")
 
 app.layout =html.Div(children=[
 
