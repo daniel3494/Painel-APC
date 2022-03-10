@@ -13,21 +13,22 @@ app = Dash(__name__)
 df = pd.DataFrame({
     "Frutas": ["Maçãs", "Laranjas", "Bananas", "Soja", "Maçãs", "Laranjas", "Bananas","Soja"],
     "Quantidade": [100, 150, 650, 1000, 250, 100, 130, 2000],
-    "Cidades": ["Bahia", "Bahia", "Bahia", "Bahia", "Santa Catarina", "Santa Catarina", "Santa Catarina", "Santa Catarina"]
+    "Estados": ["Bahia", "Bahia", "Bahia", "Bahia",
+     "Rio Grande do Sul", "Rio Grande do Sul", "Rio Grande do Sul", "Rio Grande do Sul"]
 })
 
-fig = px.bar(df, x="Frutas", y="Quantidade", color="Cidades", barmode="group")
+fig = px.bar(df, x="Frutas", y="Quantidade", color="Estados", barmode="group")
 
 app.layout =html.Div(children=[
 
     html.Div(children=[
-        html.H1(children='Test')
+        html.H1(children='Teste de-Mostragem de Dados')
     ]),
 
     html.H1(children='Diferença de produção entre Bahia e Rio Grande do Sul'),
 
     html.Div(children='''
-        Teste de-Mostragem de Dados 
+        T1
     '''),
 
     dcc.Graph(
