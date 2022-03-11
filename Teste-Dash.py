@@ -11,7 +11,8 @@ app = Dash(__name__)
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 
-df = pd.read_excel("Vendas_1.xlsx")
+df = pd.read_excel("https://github.com/Trabalho-APC-DASH/Painel-APC/blob/3b1946f9c34e8e7ca8ef6ad4b6e905e302f05969/Vendas_1.xlsx?raw=true")
+
 
 fig = px.bar(df, x="Produto", y="Quantidade", color="ID Loja", barmode="group")
 
@@ -21,7 +22,7 @@ app.layout =html.Div(children=[
         html.H1(children='Teste de-Mostragem de Dados')
     ]),
 
-    html.H1(children='Diferença de produção entre Bahia e Rio Grande do Sul'),
+    html.H2(children='Diferença de produção entre Bahia e Rio Grande do Sul'),
 
     html.Div(children='''
         T1
