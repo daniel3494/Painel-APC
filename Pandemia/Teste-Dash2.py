@@ -11,7 +11,7 @@ app = Dash(__name__)
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 
-df = pd.read_csv("Painel-APC\owid-covid-latest.csv")
+df = pd.read_csv("https://github.com/Trabalho-APC-DASH/Painel-APC/raw/main/Pandemia/owid-covid-latest.csv")
 
 
 fig = px.bar(df, x="location", y="new_deaths")
