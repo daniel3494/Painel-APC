@@ -11,7 +11,7 @@ app = Dash(__name__)
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 
-df = pd.read_excel("APC\Painel-APC\Vendas_1.xlsx")
+df = pd.read_excel("Vendas_1.xlsx")
 
 fig = px.bar(df, x="Produto", y="Quantidade", color="ID Loja", barmode="group")
 
