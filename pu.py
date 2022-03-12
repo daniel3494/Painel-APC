@@ -9,13 +9,10 @@ app = Dash(__name__)
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pd.read_csv("Pandemia\owid-covid-latest.csv")
+df = pd.read_excel("https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Excelchips.xlsx?raw=true")
 
-fig = px.bar(df, x="Coluna1", y="Continen", color="iso_code", barmode="group")
-opcoes = list(df["Coluna5"].unique())
-opcoes.append("Todas as lojas")
+fig = px.bar(df, x="Categoria", y="datetime.datetime(2020, 3, 12, 0, 0)")
     
-
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),
 
