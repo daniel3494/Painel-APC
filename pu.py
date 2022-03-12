@@ -15,7 +15,7 @@ colors = {
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 
-df = pd.read_excel("Painel-APC\Excelchips.xlsx")
+df = pd.read_excel("https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Excelchips.xlsx?raw=true")
 
 fig = px.line(df, x='Datas', y='Preço', color='Categoria', markers=True, height=580, text="Preço")
 
