@@ -9,9 +9,9 @@ app = Dash(__name__)
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pd.read_excel("https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Excelchips.xlsx?raw=true")
+df = pd.read_excel("Painel-APC\Excelchips.xlsx")
 
-fig = px.bar(df, x="Categoria", y="datetime.datetime(2020, 3, 12, 0, 0)")
+fig = px.bar(df, x="Categoria", y="12_03_2020")
     
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),
