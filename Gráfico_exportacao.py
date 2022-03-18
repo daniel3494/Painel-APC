@@ -10,7 +10,7 @@ opcoes = list(df["CONTINENTE"].unique())
 opcoes.insert(0, 'Todos os Continentes')
 del opcoes[6]
 
-fig = px.bar(df, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
+fig = px.bar(df, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
 
 app.layout = html.Div(children=[
 
@@ -33,12 +33,12 @@ app.layout = html.Div(children=[
 def update_de_dash(value):
     if value == "Todos os Continentes":
             
-        fig = px.bar(df, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
+        fig = px.bar(df, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
     
     else:
 
         tabela_filtrada = df.loc[df['CONTINENTE']==value, :]
-        fig = px.bar(tabela_filtrada, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title=f'Exportação: {value}')
+        fig = px.bar(tabela_filtrada, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title=f'Exportação: {value}')
 
     return fig
 
