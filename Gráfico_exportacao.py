@@ -4,7 +4,7 @@ from dash import Dash, dcc, html, Input, Output
 
 app = Dash(__name__)
 
-df = pd.read_excel("NovoPainel_DASH\Banco de Dados\Brasil-Exportacao_cafe_por_pais.xlsx")
+df = pd.read_excel("https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banco%20de%20Dados/Brasil-Exportacao_cafe_por_pais.xlsx?raw=true")
 opcoes = list(df["CONTINENTE"].unique())
 
 opcoes.insert(0, 'Todos os Continentes')
@@ -14,7 +14,10 @@ fig = px.bar(df, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS 
 
 app.layout = html.Div(children=[
 
-    dcc.Dropdown(opcoes, value='Todos os Continentes', id='Filtro_Continentes'),
+    dcc.Dropdown(opcoes, value='Todos os Continentes', id='Filtro_Continentes', style={
+        "border-radius": "30px",
+        "background-color": "darkgrey"
+    }),
 
     dcc.Graph(
         id='Grafico_dados',
@@ -27,7 +30,7 @@ app.layout = html.Div(children=[
     Output('Grafico_dados', 'figure'),
     Input('Filtro_Continentes', 'value')
 )
-def update_output(value):
+def update_de_dash(value):
     if value == "Todos os Continentes":
             
         fig = px.bar(df, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
@@ -35,9 +38,9 @@ def update_output(value):
     else:
 
         tabela_filtrada = df.loc[df['CONTINENTE']==value, :]
-        fig = px.bar(tabela_filtrada, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
+        fig = px.bar(tabela_filtrada, x="CONTINENTE", y="CONILLON (Por sacas de 60kg)", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title=f'Exportação: {value}')
 
-        return fig
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
