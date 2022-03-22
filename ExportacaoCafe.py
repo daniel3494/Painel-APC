@@ -1,3 +1,6 @@
+# VERSÃO V3.0 Final em Barras
+# EDITADO EM 22/03 ÀS 20:02
+
 import plotly.express as px # Importação do Plotly para criar o design dos gráficos
 from pandas import read_excel # Importação da função read_excel, para ler excel, da biblioteca Pandas
 from dash import Dash, dcc, html, Input, Output
@@ -29,6 +32,8 @@ opcoes = list(df["CONTINENTE"].unique())
 opcoes.insert(0, 'Todos os Continentes')
 del opcoes[6]
 
+opcoes2 = ['ARÁBICA (Por sacas de 60kg)', 'CONILLON (Por sacas de 60kg)', 'SOLÚVEL (Por sacas de 60kg)', 'TORRADO (Por sacas de 60kg)', 'TOTAL']
+
 '''
 Nesta etapa, esta sendo efetuada as seguintes questões:
 
@@ -39,19 +44,27 @@ CONTINENTE do dataframe "df" (variável declarada para armazenar a leitura reali
 @ Na linha seguinte (Linha 29), é feito uma inserção na posição 0 dessa lista, cujo receberá uma string
 'Todos os Continentes';
 
-@ Na última linha, mandei deletar a informação da 6º posição, pois NO ARQUIVO do excel (banco de dados), a última linha é
+@ Na última linha das OPCOES, mandei deletar a informação da 6º posição, pois NO ARQUIVO do excel (banco de dados), a última linha é
 nula, ou seja, não possui nada escrita nela e, por isso, estava sendo armazenada na lista um valor 'null' para representa-la.
 Como ela não será útil, apaguei.
+
+@ Na segunda variável OPCOES2, foi feita uma listas das colunas por tipo de café, IGUAL AO ARQUIVO EXCEL, que o usuário poderá escolher em um
+dropdown logo adiante.
 '''
 
 # DECLARAÇÃO DE COMO O GRÁFICO IRÁ SER ORGANIZADO:
-fig = px.bar(df, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
+fig = px.bar(df, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
 
 
 # DECLARAÇÃO DO LAYOUT DA PÁGINA WEB COM HTML, CSS E O DCC:
 app.layout = html.Div(children=[
 
     dcc.Dropdown(opcoes, value='Todos os Continentes', id='Filtro_Continentes', style={
+        "border-radius": "30px",
+        "background-color": "darkgrey"
+    }),
+
+    dcc.Dropdown(opcoes2, value='TOTAL', id='Filtro_Tipo', style={
         "border-radius": "30px",
         "background-color": "darkgrey"
     }),
@@ -76,7 +89,7 @@ em seu interior, ou originadas a partir desse bloco, de filhas ('Children'). A f
 parâmetro para que seja descritas as informações que ficarão dentro dela;
 
 
-@ O dcc.Dropdown está criando, na página web, a tal caixa de seleção. Entre parênteses temos:
+@ O dcc.Dropdown está criando, na página web, a tal caixa de seleção PARA OS CONTINENTES. Entre parênteses temos:
 
 - Definição das opções que serão mostradas na caixa de seleção, neste caso, será a lista criada na linha 28 'OPCOES';
 
@@ -96,87 +109,112 @@ de navegação, o tamanho e posição da imagem, etc.
 - Sendo assim, estamos alterando 2 características do Dropdown em CSS: O Raio da borda (Border-Radius) para que as 
 quinas da caixa de seleção fique redonda, e a Cor de Fundo do Dropdown (Background-Color) para Darkgrey;
 
+@ Logo após o primeiro Dropdown, temos a inserção de um segundo Dropdown, que será o seletor para os tipos de cafés;
 
-@ Logo após criarmos o Dropdown e dar característicar à ela, temos o dcc.Graph, que só coloca a figura do gráfico que
+@ Logo após criarmos os Dropdown's e dar características à ela, temos o dcc.Graph, que só coloca a figura do gráfico que
 fizemos na linha 48 no site.
 '''
 
 # DEFINIÇÃO PARA QUE A MUDANÇA, DEPENDENDO DO QUE ESTIVER SELECIONADO NO DROPDOWN, FUNCIONE:
 @app.callback(
     Output('Grafico_dados', 'figure'),
+    Input('Filtro_Tipo', 'value'),
     Input('Filtro_Continentes', 'value')
 )
-def update_de_dash(value):
-    if value == "Todos os Continentes":
-            
-        fig = px.bar(df, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
+def update_de_dash(tipo, continente):
     
-    else:
+    if tipo == 'TOTAL':
+        if continente == 'Todos os Continentes':
 
-        tabela_filtrada = df.loc[df['CONTINENTE']==value, :]
-        fig = px.bar(tabela_filtrada, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=900, width=700, text='PAÍS DESTINO', title=f'Exportação: {value}')
+            fig = px.bar(df, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=700, text='PAÍS DESTINO', title='Exportação Brasileira por País')
+
+        else:
+
+            filtro = df.loc[df['CONTINENTE']==continente, :]
+            fig = px.bar(filtro, x="CONTINENTE", y="TOTAL", color="PAÍS DESTINO", height=700, text='PAÍS DESTINO', title=f'Exportação Brasileira ({continente})')
+
+    else:
+        if continente == 'Todos os Continentes':
+
+            fig = px.bar(df, x="CONTINENTE", y=str(tipo), color="PAÍS DESTINO", height=700, text='PAÍS DESTINO', title=f'Exportação do café {tipo} Brasileiro ({continente})')
+
+        else:
+
+            filtro = df.loc[df['CONTINENTE']==continente, :]
+            fig = px.bar(filtro, x="CONTINENTE", y=str(tipo), color="PAÍS DESTINO", height=700, text='PAÍS DESTINO', title=f'Exportação {tipo} Brasileiro ({continente})')
 
     return fig
 
 '''
-Por último temos um callback e, logo embaixo, uma função.
+CALLBACK:
 
-@ O callback serve para conectar o Dropdown com o Gráfico com os seguintes parâmetros:
+@ Para que as alterações funcionem, utilizaremos um callback para nos dar assistência às variáveis que serão enviadas para a nossa função.
+Dentro do callback, temos 3 parâmetros, sendo 2 iguais. São eles:
 
+- INPUT: Que determinará o gatilho que necessário para algo mudar.
 
-# INPUT: QUEM SERÁ O GATILHO PARA ALTERAÇÃO? 
-Iremos definir essas informações após o parênteses:
-
-- O nome (id) do objeto a ser o gatilho, este caso definimos ele como 'Filtro_Continentes', que é o nome da caixa de
-seleção (dropdown);
-
-- Após definirmos o nome do objeto a ser o gatilho, definimos o que exatamente funcionará como gatilho presente neste
-objeto. Neste caso, será o 'value' selecionado na caixa de seleção.
+- OUTPUT: Quem será alterado.
 
 
-# OUTPUT: QUEM SERÁ MODIFICADO PELO GATILHO?
-Iremos definir essas informações após os parênteses:
+@ Sob essa definição, temos um OUTPUT a ser alterado. Entre parênteses, inserimos:
 
-- O nome (id) do objeto a ser modificado, este caso definimos ele como 'Gráfico_dados', que é o nome do dcc responsável
-em inserir a figura do gráfico no site;
+- O nome (id) do objeto a ser alterado. Neste caso será o 'Grafico_dados', que é o dcc responsável em mostrar o gráfico fig ma página web.
 
-- Após definirmos o nome do objeto a ser o modificado, definimos o que exatamente será modificado neste dcc. 
-Neste caso, será o 'figure' dele.
+- O fator específico do objeto escolhido como OUTPUT a ser alterado, neste caso será a variável figure, que armazena as informações da
+estrutura do gráfico (linha 74).
 
-
-@ Agora criamos a função que dará o funcionamento dessa mudança. Usamos o def para iniciar a função e chamamos esse processo
-de 'update_de_dash'.
-
-@ Para que ele possa trabalhar, precisamos de um argumento para que seja usada na função: O valor (value) selecionado na
-caixa de seleção (Dropdown). Conseguimos usar esse argumento graçãs ao callback que definiu isso para a gente.
+@ Temos, após o OUTPUT, 2 INPUTS, que serão responsáveis em definir qual o continente e o tipo de café o usuário irá querer observar.
+Entre parenteses, seguimos a mesma regra dos argumentos do OUTPUT.
 
 
-@ Com o 'value' em mãos, a função irá avaliar: A opção selecionada no dropdown é "Todos os Continentes"?
+FUNÇÃO:
 
-# Se sim, a função só irá mostrar o gráfico de todos os continentes presentes na coluna CONTINENTES do dataframe 'df',
-definido na linha 25;
+@ Criamos o prefixo def para iniciar a função, com o nome de 'update_de_dash'. Para que consigamos trabalhar bem com as
+alterações nos gráficos, iremos receber 2 argumentos graças aos dois INPUTS declaradas no callback. Na ordem temos o INPUT
+do tipo de café, e o segundo INPUT cuidará de receber o continente que o usuário irá buscar.
 
-# Se não, a função irá criar um novo dataframe a partir da filtragem do dataframe original. Para isso criamos uma variável
-que irá armazenar essa filtragem, chamada 'tabela_filtrada'. Após o igual temos:
+@ Tendo em mãos esses dois argumentos (def update_de_dash(TIPO, CONTINENTE), na linha 124) podemos trabalhar a filtragem
+o retorno delas na variável fig, que será mostrada na página web.
 
-- O dataframe original a ser filtrada, neste caso será o 'df' lido pelo pandas na linha 25. (df.);
 
-- Chamamos a função 'loc', que é responsável por filtrar uma tabela. (df.loc)
+@ Temos 2 situações para o Tipo de café selecionado:
 
-$ Entre parênteses do loc, temos:
+- Todos os tipos de cafés;
 
-- A coluna a ser filtrada, neste caso será a coluna 'CONTINENTES' do dataframe 'df'. (df[CONTINENTES]);
+- Tipo de café específico.
 
-- Para que a mudança no gráfico esteja correta, é necessário que ele nos mostre somente os países presentes no continente
-escolhido no 'value' da caixa de seleção (Dropdown), ou seja, a coluna CONTINENTES do dataframe 'df' deve ser igual ao
-value do Dropdown. (df[CONTINENTES]==value).
+@ Temos também 2 situações para os continentes selecionados:
 
-@ Na linha abaixo (Linha 117), estamos redefinindo novamente a organização do gráfico, que irá sobre escrever a variável
-fig, dessa vez, não pegaremos mais todas as linhas da coluna CONTINENTES, mas somente as filtradas pela função. Entre
-parênteses o que muda é:
+- Todos os continentes;
 
-- Dataframe a ser utilizado, neste caso usaremos o dataframe filtrado 'Tabela_Filtrada'.
+- Continente específico.
+
+
+@ Por isso, temos que separá-los em if's, que dará o resultado final do gráfico dependendo da combinação destas seleções:
+
+- PRIMEIRO IF: 
+    Para caso de TODOS OS TIPOS DE CAFÉ
+
+    - PRIMEIRO SUB-IF:
+        Para caso de TODOS OS TIPOS DE CAFÉ & TODOS OS CONTINENTES
+
+    - SEGUNDO SUB-IF:
+        Para caso de TODOS OS TIPOS DE CAFÉ & CONTINENTE ESPECÍFICO
+
+
+- SEGUNDO IF:
+    Para caso de TIPO DE CAFÉ ESPECÍFICO
+
+    - PRIMEIRO SUB-IF:
+        Para caso de TIPO DE CAFÉ ESPECÍFICO & TODOS OS CONTINENTES
+
+    - SEGUNDO SUB-IF:
+        Para caso de TIPO DE CAFÉ ESPECÍFICO & CONTINENTE ESPECÍFICO
+
+    
+    Retorno do gráfico dependendo da combinação escolhida.
 '''
+
 # OUTRA VEZ, PARA MARCAR O FIM DA CONTRUÇÃO DO APP, E PARA DEIXAR O SITE FUNCIONANDO:
 if __name__ == '__main__':
     app.run_server(debug=True)
