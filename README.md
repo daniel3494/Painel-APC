@@ -28,7 +28,7 @@
 * Dash;
 * Plotly;
 * Pandas;
-* openpyxl.
+* Openpyxl.
 
 <h4>Todos eles poderão ser instalados utilizando o 'pip install' no prompt de comando do windons ou linux.</h4>
 <br>
