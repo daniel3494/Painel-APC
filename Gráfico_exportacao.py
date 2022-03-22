@@ -39,7 +39,7 @@ CONTINENTE do dataframe "df" (variável declarada para armazenar a leitura reali
 @ Na linha seguinte (Linha 29), é feito uma inserção na posição 0 dessa lista, cujo receberá uma string
 'Todos os Continentes';
 
-@ Na última linha, manndei deletar a informação da 6º posição, pois NO ARQUIVO do excel (banco de dados), a última linha é
+@ Na última linha, mandei deletar a informação da 6º posição, pois NO ARQUIVO do excel (banco de dados), a última linha é
 nula, ou seja, não possui nada escrita nela e, por isso, estava sendo armazenada na lista um valor 'null' para representa-la.
 Como ela não será útil, apaguei.
 '''
@@ -73,7 +73,7 @@ Basicamente é um bloco de informação dentro dela.
 
 @ Quando criamos um bloco em que dentro dela terá mais informações, chamamos a origem de pai e as informações dispostas
 em seu interior, ou originadas a partir desse bloco, de filhas ('Children'). A função div aqui no python precisa desse
-argumento para que seja descritas as informações que ficarão dentro dela;
+parâmetro para que seja descritas as informações que ficarão dentro dela;
 
 
 @ O dcc.Dropdown está criando, na página web, a tal caixa de seleção. Entre parênteses temos:
