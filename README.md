@@ -43,7 +43,7 @@
   
 </div><br>
 
-# FrameWorks Utilizados:
+# Library's Utilizados:
 
 <div align = "center" padding = "10px">
   
