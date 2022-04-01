@@ -8,7 +8,7 @@ from dash import Dash, dcc, html, Input, Output
 app = Dash(__name__)
 
 # DEFINIÇÃO DO BANCO DE DADOS:
-df = read_excel('Painel-APC\Banco de Dados\Paises_exportadores_cafe.xlsx')
+df = read_excel('https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banco%20de%20Dados/Paises_exportadores_cafe.xlsx?raw=true')
 ListaDeFiltro = df.values
 
 # LISTA DE TODOS OS PAÍSES DIVIDIDO POR CONTINENTES PARA SER UTILIZADO NO PASSSO MAIS ABAIXO:
