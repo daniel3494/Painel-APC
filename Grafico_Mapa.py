@@ -1,10 +1,12 @@
-# VERSÃO BETA V1.0 EM MAPA
-# EDITADO EM 28/03 ÀS 23:55
+# VERSÃO BETA V1.1 EM MAPA
+# EDITADO EM 01/04 ÀS 16:15
 
+# IMPORTAÇÃO DE 3 BIBLIOTECAS:
 import plotly.express as px
 from pandas import read_excel
 from dash import Dash, dcc, html, Input, Output
 
+# FUNCIONAMENTO DO SITE
 app = Dash(__name__)
 
 # DEFINIÇÃO DO BANCO DE DADOS:
@@ -20,19 +22,27 @@ Europa = ['Albânia', 'Alemanha', 'Andorra', 'Áustria', 'Bélgica', 'Bielorrús
 Ásia = ['Timor Leste', 'Birmânia', 'Afeganistão', 'Arábia Saudita', 'Armênia', 'Azerbaijão', 'Bahrein', 'Bangladesh', 'Brunei', 'Butão', 'Camboja', 'Cazaquistão', 'Catar', 'China', 'Chipre', 'Cingapura', 'Coreia do Norte', 'Coreia do Sul', 'Egito', 'Emirados Árabes', 'Filipinas', 'Geórgia', 'Iêmen', 'Índia', 'Indonésia', 'Irã', 'Iraque', 'Israel', 'Japão', 'Jordânia', 'Kuwait', 'Laos', 'Líbano', 'Malásia', 'Maldivas', 'Mianmar', 'Mongólia', 'Nepal', 'Omã', 'Paquistão', 'Quirguistão', 'Rússia', 'Síria', 'Sri Lanka', 'Tajiquistão', 'Tailândia', 'Timor-Leste', 'Turcomenistão', 'Turquia', 'Uzbequistão', 'Vietnã', 'Taiwan', 'República Popular da China']
 África = ['África do Sul', 'Angola', 'Argélia', 'Benim', 'Botswana', 'Burquina Faso', 'Burundi', 'Camarões', 'Chade', 'Costa do Marfim', 'Djibouti', 'Egito', 'Eritreia', 'Etiópia', 'Gabão', 'Gâmbia', 'Gana', 'Guiné', 'Guiné-Bissau', 'Guiné Equatorial', 'Madagáscar', 'Cabo Verde', 'Comores', 'São Tomé e Príncipe', 'Seychelles', 'Lesoto', 'Libéria', 'Líbia', 'Malawi', 'Mali', 'Marrocos', 'Mauritânia', 'Moçambique', 'Namíbia', 'Níger', 'Nigéria', 'Quênia', 'República da África Central', 'República Democrática do Congo', 'República do Congo', 'República de Maurício', 'Ruanda', 'Senegal', 'Serra Leoa', 'Somália', 'Eswatini', 'Sudão', 'Sudão do Sul', 'Tanzânia', 'Togo', 'Tunísia', 'Uganda', 'Zâmbia', 'Zimbábue', 'República Popular do Congo']
 
-# DISTRIBUIÇÃO DOS CONTINENTES AOS PAÍSES:
+# DISTRIBUIÇÃO DOS CONTINENTES AOS PAÍSES
 Novalista = []
 
-
+# INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "ListaDeFiltro"
 for ln in ListaDeFiltro:
+
+    # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "Oceania"
     for cont in Oceania:
+
+        # CASO O PAÍS DA LISTA DE FILTRO SE ENCONTRE NA DA OCEANIA, SEU CONTINENTE SERÁ OCEANIA.
         if ln[1] == cont:
             Novalista += [[ln[0], ln[1], ln[2],'Oceania']]
 
+    # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "América_Do_Norte"
     for cont in América_do_Norte:
+
+        # CASO O PAÍS DA LISTA DE FILTRO SE ENCONTRE NA AMÉRICA DO NORTE, SEU CONTINENTE SERÁ AMÉRICA DO NORTE.
         if ln[1] == cont:
             Novalista += [[ln[0], ln[1], ln[2], 'América do Norte']]
 
+# MESMA LÓGICA DOS PASSOS ANTERIORES...
     for cont in América_Central:
         if ln[1] == cont:
             Novalista += [[ln[0], ln[1], ln[2], 'América Central']]
@@ -54,13 +64,14 @@ for ln in ListaDeFiltro:
             Novalista += [[ln[0], ln[1], ln[2], 'África']]
     
 # DEFINIÇÃO DA ORGANIZAÇÃO DO MAPA:
-map_fig = px.scatter_geo(Novalista,
-                         locations= 0,
-                         projection= 'orthographic',
-                         opacity= .8,
-                         hover_name= 1,
-                         color=3,
-                         hover_data=[2]
+map_fig = px.scatter_geo(Novalista, # Definição do DataFrame a ser utilizado
+                         locations= 0, # As localizações se darão da coluna 0 do DataFrame, que são os ID's
+                         projection= 'orthographic', # Projeção do mapa no tipo Ortográfica
+                         opacity= .6, # Definição da opacidade das bolinhas no mapa
+                         hover_name= 1, # Dado de Nome, que foi definido pela coluna 1 do DataFrame, que é os Países
+                         color=3, # Definição da separação de cores, definida pela coluna 3 do DataFrame, que são os continentes
+                         hover_data=[2], # Definição de Acrescimo de informação, neste caso a coluna 2 esta sendo acrescentada nos dados do mapa, que são as Produções
+                         labels={'3':'Continente', '0':'País ID', "2":'Produção Anual (Toneladas)'} # Renomeação dos tópicos no mapa, para que seja melhor interpretado
 )
 
 # LAYOUT DO SITE:
@@ -73,5 +84,6 @@ app.layout = html.Div(children=[
 
 ]) 
 
+# SINTAXE PARA DEIXAR O SITE NO AR:
 if __name__ == '__main__':
     app.run_server(debug=True)
