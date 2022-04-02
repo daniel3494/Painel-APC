@@ -1,5 +1,8 @@
 import plotly.express as px
 import plotly.graph_objects as go
+from dash import Dash, dcc, html, Input, Output
+
+app = Dash(__name__)
 
 fig =go.Figure(go.Sunburst(
     labels=["Lucros", "Soja", "Milho em Grãos", "Cana-de-Açúcar", "Café", "Algodão herbáceo", "Arroz", "Laranja", "Mais de R$ 50.000.000", "Menos de R$ 50.000.000"],
@@ -9,3 +12,6 @@ fig =go.Figure(go.Sunburst(
 fig.update_layout(margin = dict(t=50, l=0, r=0, b=0))
 
 fig.show()
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

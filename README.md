@@ -1,4 +1,5 @@
 # APC-Dashboard
+<h3> (Projeto em desenvolvimento) </h3>
 
 <h4>DashBoard e gráficos desenvolvido em equipe durante o curso de Algoritmos e Programação de Computadores (APC) na UnB 2.2021</h4>
 <br>
@@ -43,7 +44,7 @@
   
 </div><br>
 
-# FrameWorks Utilizados:
+# Library's Utilizados:
 
 <div align = "center" padding = "10px">
   
