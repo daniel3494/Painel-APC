@@ -4,7 +4,7 @@
 # IMPORTAÇÃO DE 3 BIBLIOTECAS:
 import plotly.express as px
 from pandas import read_excel
-from dash import Dash, dcc, html, Input, Output
+from dash import Dash, dcc, html
 
 # FUNCIONAMENTO DO SITE
 app = Dash(__name__)
@@ -65,13 +65,22 @@ for ln in ListaDeFiltro:
     
 # DEFINIÇÃO DA ORGANIZAÇÃO DO MAPA:
 map_fig = px.scatter_geo(Novalista, # Definição do DataFrame a ser utilizado
+                         title='Produção de Café Anual (Toneladas)',
                          locations= 0, # As localizações se darão da coluna 0 do DataFrame, que são os ID's
                          projection= 'orthographic', # Projeção do mapa no tipo Ortográfica
-                         opacity= .6, # Definição da opacidade das bolinhas no mapa
+                         opacity= 1, # Definição da opacidade das bolinhas no mapa
                          hover_name= 1, # Dado de Nome, que foi definido pela coluna 1 do DataFrame, que é os Países
                          color=3, # Definição da separação de cores, definida pela coluna 3 do DataFrame, que são os continentes
+                         height=800,
                          hover_data=[2], # Definição de Acrescimo de informação, neste caso a coluna 2 esta sendo acrescentada nos dados do mapa, que são as Produções
-                         labels={'3':'Continente', '0':'País ID', "2":'Produção Anual (Toneladas)'} # Renomeação dos tópicos no mapa, para que seja melhor interpretado
+                         labels={'3':'Continente', '0':'País ID', "2":'Produção'} # Renomeação dos tópicos no mapa, para que seja melhor interpretado
+)
+
+map_fig.update_geos(
+    landcolor="white",
+    oceancolor="MidnightBlue",
+    showocean=True,
+    lakecolor="LightBlue"
 )
 
 # LAYOUT DO SITE:
