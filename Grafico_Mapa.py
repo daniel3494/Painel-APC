@@ -65,22 +65,22 @@ for ln in ListaDeFiltro:
     
 # DEFINIÇÃO DA ORGANIZAÇÃO DO MAPA:
 map_fig = px.scatter_geo(Novalista, # Definição do DataFrame a ser utilizado
-                         title='Produção de Café Anual (Toneladas)',
+                         title= 'Produção de Café Anual (Toneladas)',
                          locations= 0, # As localizações se darão da coluna 0 do DataFrame, que são os ID's
                          projection= 'orthographic', # Projeção do mapa no tipo Ortográfica
                          opacity= 1, # Definição da opacidade das bolinhas no mapa
                          hover_name= 1, # Dado de Nome, que foi definido pela coluna 1 do DataFrame, que é os Países
-                         color=3, # Definição da separação de cores, definida pela coluna 3 do DataFrame, que são os continentes
+                         color= 3, # Definição da separação de cores, definida pela coluna 3 do DataFrame, que são os continentes
                          height=800,
                          hover_data=[2], # Definição de Acrescimo de informação, neste caso a coluna 2 esta sendo acrescentada nos dados do mapa, que são as Produções
                          labels={'3':'Continente', '0':'País ID', "2":'Produção'} # Renomeação dos tópicos no mapa, para que seja melhor interpretado
 )
 
 map_fig.update_geos(
-    landcolor="white",
-    oceancolor="MidnightBlue",
+    landcolor="#06832F",
+    oceancolor="#1E8AC9",
     showocean=True,
-    lakecolor="LightBlue"
+    lakecolor="#5FC4D0"
 )
 
 # LAYOUT DO SITE:
