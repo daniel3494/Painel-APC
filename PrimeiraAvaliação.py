@@ -1,3 +1,7 @@
+# VERSÃO FINAL - ÚNICA - V1.0
+# ALTERADA EM 03/04 -- 18:30
+
+
 # EXPORTAÇÕES:
 import plotly.express as px
 from pandas import read_excel
@@ -11,7 +15,7 @@ df1 = read_excel("https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banc
 df2 = read_excel('https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banco%20de%20Dados/UnidadesReceita.xlsx?raw=true')
 
 # DECLARAÇÃO DO 3º DATAFRAME:
-df3 = read_excel('Painel-APC\Banco de Dados\Consumo_cafe.xlsx')
+df3 = read_excel('https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banco%20de%20Dados/Consumo_cafe.xlsx?raw=true')
 
 # DECLARAÇÃO DO 4º DATAFRAME:
 df4 = read_excel('https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banco%20de%20Dados/Paises_exportadores_cafe.xlsx?raw=true')
@@ -52,12 +56,11 @@ for n in lista:
 
 
 # DECLARAÇÃO DE COMO O GRÁFICO IRÁ SER ORGANIZADO:
-fig2 = px.bar(dfOf1, x=0, y=1, color=2, barmode="group", labels={
+fig2 = px.bar(dfOf1, x=0, y=1, color=2, barmode="group", title='Exportação/Importação por Receita Federal', labels={
              '0': 'Unidade Da Receita Federal',
              '1': 'Sacas (60kg)',
              '2': 'Tipo'
             })
-
 
 
 
