@@ -9,7 +9,7 @@ from dash import Dash, dcc, html
 
 app = Dash(__name__)
 
-df = read_excel('UnidadesReceita.xlsx')
+df = read_excel('https://github.com/Trabalho-APC-DASH/Painel-APC/blob/main/Banco%20de%20Dados/UnidadesReceita.xlsx?raw=true')
 lista = df.values
 
 opcoes1 = list(df['Unidades Receita Federal'])
@@ -30,11 +30,6 @@ fig = px.bar(df2, x=0, y=1, color=2, barmode="group", labels={
             })
 
 app.layout = html.Div(children=[
-
-    dcc.Dropdown(opcoes1, value='Todos os Continentes', id='Filtro_Unidade', style={
-        "border-radius": "30px",
-        "background-color": "darkgrey"
-    }),
 
     dcc.Graph(
         id='Grafico_dados',
