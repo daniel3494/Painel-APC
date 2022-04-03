@@ -1,7 +1,6 @@
 # VERSÃO BETA V1.1 EM MAPA
 # EDITADO EM 01/04 ÀS 16:15
 
-# IMPORTAÇÃO DE 3 BIBLIOTECAS:
 import plotly.express as px
 from pandas import read_excel
 from dash import Dash, dcc, html
@@ -27,23 +26,17 @@ Novalista = []
 
 # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "ListaDeFiltro"
 for ln in ListaDeFiltro:
+    for cont in Oceania: # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "Oceania"
 
-    # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "Oceania"
-    for cont in Oceania:
-
-        # CASO O PAÍS DA LISTA DE FILTRO SE ENCONTRE NA DA OCEANIA, SEU CONTINENTE SERÁ OCEANIA.
-        if ln[1] == cont:
+        if ln[1] == cont: # CASO O PAÍS DA LISTA DE FILTRO SE ENCONTRE NA DA OCEANIA, SEU CONTINENTE SERÁ OCEANIA.
             Novalista += [[ln[0], ln[1], ln[2],'Oceania']]
 
-    # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "América_Do_Norte"
-    for cont in América_do_Norte:
+    for cont in América_do_Norte: # INÍCIO DE REPETIÇÃO PARA CADA ELEMENTO DA LISTA "América_Do_Norte"
 
-        # CASO O PAÍS DA LISTA DE FILTRO SE ENCONTRE NA AMÉRICA DO NORTE, SEU CONTINENTE SERÁ AMÉRICA DO NORTE.
-        if ln[1] == cont:
+        if ln[1] == cont: # CASO O PAÍS DA LISTA DE FILTRO SE ENCONTRE NA AMÉRICA DO NORTE, SEU CONTINENTE SERÁ AMÉRICA DO NORTE.
             Novalista += [[ln[0], ln[1], ln[2], 'América do Norte']]
 
-# MESMA LÓGICA DOS PASSOS ANTERIORES...
-    for cont in América_Central:
+    for cont in América_Central: # MESMA LÓGICA DOS PASSOS ANTERIORES...
         if ln[1] == cont:
             Novalista += [[ln[0], ln[1], ln[2], 'América Central']]
 
